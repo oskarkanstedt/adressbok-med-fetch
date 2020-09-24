@@ -1,22 +1,18 @@
-/*fetch('adressbok-1.json')
-    .then(response => response.json())
-    .then(data => console.log(data)); */
 
-const data = { username: 'example' };
+function sortAge(a, b){
+    return a.age - b.age
+}
 
+async function loadAddressBook() {
+    const response = await fetch('adressbok-1.json')
+    const persons = await response.json()
+    const parent = document.getElementById('listOfContacts')
+    persons.sort(sortAge).forEach(person => {
+        const li = document.createElement('li')
+        li.innerText = `${person.lastname}, ${person.firstname} Email: ${person.email}`
+        parent.appendChild(li)
+    })
+}
 
+loadAddressBook()
 
-fetch('adressbok-1.json', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(data),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
